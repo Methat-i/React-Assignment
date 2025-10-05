@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+//prop-types เป็นการตรวจสอบประเภทของ props ที่ส่งเข้ามา
 
 function Product({ item }) {
   let productImage = '';//ป้องกัน er เถ้าไม่มีภาพ
