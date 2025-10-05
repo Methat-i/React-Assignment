@@ -19,7 +19,9 @@ function Product({ item }) {
       }
     }
   } else {
-    productImage = 'https://via.placeholder.com/100';
+    console.log(`item.imageURL is missing or falsy (value: ${item.imageURL}), using default placeholder.`);
+        productImage = require('../../assets/default2.jpg');
+
   }
   return (
     <li className="Products">
