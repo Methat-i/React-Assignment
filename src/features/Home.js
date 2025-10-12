@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
 import Product from './Product';
 import AddForm from './Product/AddForm';
 
 let currentProductId = 9;
 
-export default function Home() {
+function Home({ className }) {
   const [products, setProducts] = useState([]);
 
-  // ✅ ใช้ useEffect เพื่อเรียก API แค่ครั้งเดียว
   useEffect(() => {
     async function getProducts() {
       const products = await axios.get(
@@ -17,9 +17,8 @@ export default function Home() {
       );
       setProducts(products.data);
     }
-
     getProducts();
-  }, []); // ✅ empty dependency array = เรียกครั้งเดียวตอน mount
+  }, []);
 
   function addProduct(product) {
     const newProduct = { id: ++currentProductId, ...product };
@@ -27,7 +26,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className={className}>
       <h1>New Products</h1>
       {products.length > 0 ? (
         <ul className="Home__products">
@@ -39,6 +38,16 @@ export default function Home() {
         <div>Loading products....</div>
       )}
       <AddForm addProduct={addProduct} />
-    </>
+    </div>
   );
 }
+
+export default styled(Home)`
+  .Home__products {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 -12px;
+  }
+`;
