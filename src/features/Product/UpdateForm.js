@@ -1,27 +1,35 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import { addProduct } from "./actions";
+import { updateProduct, deleteProduct } from "./actions";
 
-function AddForm({ className }) {
-  const [name, setName] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [type, setType] = useState("");
-
+function UpdateForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function onSubmit(event) {
+  const { id } = useParams();
+  const products = useSelector((state) => state.products);
+  const product = products.find((product) => product.id === Number(id));
+
+  const [name, setName] = useState(product.name);
+  const [type, setType] = useState(product.type);
+  const [imageURL, setImageURL] = useState(product.imageURL);
+
+  const onSubmit = (event) => {
     event.preventDefault();
-    dispatch(addProduct({ name, type, imageURL }));
+    dispatch(updateProduct({ id: product.id, name, type, imageURL }));
     navigate("/");
-  }
+  };
+
+  const onDelete = () => {
+    dispatch(deleteProduct({ id: product.id }));
+    navigate("/");
+  };
 
   return (
-    <div className={className}>
-      <h1>Add Product</h1>
+    <>
+      <h1>Update Product</h1>
       <form id="create-form" onSubmit={onSubmit}>
         <div className="input-group">
           <label htmlFor="name">Name</label>
@@ -56,14 +64,17 @@ function AddForm({ className }) {
           />
         </div>
 
-        <button type="submit">Add product</button>
+        <button
+          type="button"
+          className="UpdateForm__delete-button"
+          onClick={onDelete}
+        >
+          Delete restaurant
+        </button>
+        <button type="submit">Update product</button>
       </form>
-    </div>
+    </>
   );
 }
 
-AddForm.propTypes = {
-  addProduct: PropTypes.func.isRequired,
-};
-
-export default AddForm;
+export default UpdateForm;

@@ -1,4 +1,3 @@
-// src/features/GlobalStyle.js
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -48,10 +47,10 @@ const GlobalStyle = createGlobalStyle`
     float: left;
     padding: 0;
   }
-
+    
   form .input-group {
     margin-bottom: 1.5rem;
   }
-`;
+  `;
 
 export default GlobalStyle;

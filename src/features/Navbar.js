@@ -1,13 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-function Navbar({ className }) { // ✅ รับ className
+import { Link } from 'react-router-dom';
+
+function Navbar({ className }) {
   return (
     <header className={className}>
-      <a href="/" className="brand">Trendie</a>
-      <a href="/create-product">Create product</a>
+      <Link to="/" className="brand">Trendie</Link>
+      <Link to="/create-product">Create product</Link>
     </header>
   );
+}
+
+Navbar.protoTypes = {
+  className: PropTypes.string.isRequired,
 }
 
 export default styled(Navbar)`
@@ -18,7 +25,7 @@ export default styled(Navbar)`
   justify-content: space-between;
   background-color: #ffffff;
   border-bottom: 1px solid #dee2e6;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 0.125rem 0.25rem rgba(202, 0, 0, 0.07);
   padding: 2rem;
   position: fixed;
   z-index: 100;
@@ -27,4 +34,4 @@ export default styled(Navbar)`
     font-weight: bold;
     font-size: 1.5rem;
   }
-`;
+`

@@ -1,53 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function Product({ item, className }) {
-  let productImage = '';
-
-  if (item.imageURL) {
-    if (item.imageURL.startsWith('http') || item.imageURL.startsWith('https')) {
-      productImage = item.imageURL;
-    } else {
-      try {
-        productImage = require(`../../assets/${item.imageURL}`);
-      } catch (err) {
-        console.warn(`Image not found: ${item.imageURL}`, err);
-        productImage = require('../../assets/default.jpg');
-      }
-    }
-  } else {
-    productImage = require('../../assets/default2.jpg');
-  }
-
+  const productImage = require(`../../assets/${item.imageURL}`);
   return (
     <li className={className}>
-      <a href={`/update-product/${item.id}`}>
-        <img src={productImage} alt={item.name} />
+      <Link to={`/update-product/${item.id}`}>
+        <img className="Products__image" src={productImage} alt={item.name} />
         <div className="Products__name">{item.name}</div>
         <small className="Products__type">{item.type}</small>
-      </a>
+      </Link>
     </li>
   );
 }
 
 Product.propTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
-// styled-component
 export default styled(Product)`
-  padding: 0 12px 36px 12px;
+  padding-right: 12px;
+  padding-bottom: 36px;
+  padding-left: 12px;
   width: 33%;
   position: relative;
-  list-style: none;
-
-  img {
-    width: 100%;
-    height: 200px;      /* ✅ fix height */
-    object-fit: cover;   /* ✅ crop/cover */
-    border-radius: 8px;
-  }
 
   .Products__name {
     color: #333;
@@ -56,10 +35,16 @@ export default styled(Product)`
     white-space: nowrap;
     width: 100%;
     display: block;
-    margin-top: 0.5rem;
   }
 
   .Products__type {
     color: #767676;
+  }
+
+  .Products__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 `;
